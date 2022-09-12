@@ -1,0 +1,5 @@
+DROP DATABASE IF EXISTS qd_db;
+
+CREATE DATABASE qd_db;
+
+USE qd_db;
