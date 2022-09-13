@@ -26,11 +26,11 @@ a {
     color: #F1FAEE;
 }
 
-.header-links {
+#header-links {
     display: flex;
 }
 
-.header-links a {
+#header-links a {
     margin: 0px 30px;
 }
 
@@ -47,12 +47,7 @@ a {
     padding: 25px;
 }
 
-#signup-container {
-    display: none;
-}
-
 .username-input-container,
-.email-input-container,
 .password-input-container {
     display: flex;
     align-items: center;
@@ -61,7 +56,6 @@ a {
 }
 
 .username-input,
-.email-input,
 .password-input {
     width: 80%;
     margin-top: 5px;
@@ -106,14 +100,6 @@ a {
 
 .input-field {
     margin: 4px;
-}
-
-.trips-page {
-    display: flex;
-    justify-content: center;
-    color: #F1FAEE;
-    margin-top: 25px;
-    border-bottom: 5px solid #F1FAEE;
 }
 
 .search-containers {

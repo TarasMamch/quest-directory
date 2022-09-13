@@ -12,7 +12,7 @@ function Navbar() {
     return (
         <div className='header'>
             <h1>Quest Directory</h1>
-            <div className='header-links'>
+            <div id='header-links'>
                 <span>
                     <Link to="/home">Home</Link>
                 </span>

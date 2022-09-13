@@ -4,12 +4,8 @@ const { User } = require("../models");
 
 const users = [
     {
-        username: "joeLovesCats",
+        username: "ThisIsTest",
         password: "password"
-    },
-    {
-        username: "BaShiva",
-        password: "weAreTheBest"
     }
 ]
 

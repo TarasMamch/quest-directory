@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require("bcrypt");
-const { User, Trip } = require('../../models')
+const { User } = require('../../models')
 
 router.get("/", (req, res) => {
     User.findAll({
-        include: [Trip]
     })
         .then(data => {
             res.json(data)

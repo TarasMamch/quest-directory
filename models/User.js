@@ -1,25 +1,30 @@
 const { Model, DataTypes } = require("sequelize")
+const bcrypt = require("bcrypt")
 const sequelize = require("../config/connection")
 
-class Trip extends Model { }
+class User extends Model { }
 
-Trip.init({
-    id: {
-        type: DataTypes.INTEGER,
-        allownull: false,
-        primaryKey: true,
-        autoIncrement: true
+User.init({
+    username: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
     },
-    name: {
-        type: DataTypes.TEXT,
-        allowNull: false
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            len: [8, 100]
+        }
     }
 }, {
     sequelize,
-    timestamps: false,
-    freezeTableName: true,
-    underscored: true,
-    modelName: 'trip',
-})
+    hooks: {
+        beforeCreate: userObj => {
+            userObj.password = bcrypt.hashSync(userObj.password, 4);
+            return userObj;
+        }
+    }
+});
 
-module.exports = Trip
+module.exports = User

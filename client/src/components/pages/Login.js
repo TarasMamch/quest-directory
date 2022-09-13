@@ -1,32 +1,13 @@
 import React, { useEffect, useState } from "react"
 import Axios from "axios";
-import Main from '../MainContainer'
 
 export default function Login() {
-    let loginPageSetUp = true
-
-    function setPage() {
-        const loginContainer = document.getElementById("login-container")
-        const signupContainer = document.getElementById("signup-container")
-
-        if (loginPageSetUp) {
-            loginContainer.style.display = 'none'
-            signupContainer.style.display = 'flex'
-            loginPageSetUp = false
-        } else {
-            loginContainer.style.display = 'flex'
-            signupContainer.style.display = 'none'
-            loginPageSetUp = true
-        }
-    }
-
-    const [usernameReg, setUsernameReg] = useState("");
-    const [passwordReg, setPasswordReg] = useState("");
-
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
     const [loginStatus, setLoginStatus] = useState("");
+
+    const [userid, setUserId] = useState(0)
 
     Axios.defaults.withCredentials = true;
 
@@ -43,21 +24,14 @@ export default function Login() {
             username: username,
             password: password,
         }).then((response) => {
+            console.log(response)
             if (response.data.username) {
                 setLoginStatus(response.data.username);
             }
         });
     }
 
-    function signup() {
-        Axios.post("http://localhost:5000/api/users", {
-            username: usernameReg,
-            password: passwordReg,
-        }).then((response) => {
-            console.log(response)
-            loginPageSetUp = true
-        })
-    }
+    const signUpRedirect = () => document.location.href = "/signup"
 
     function LoginTemplete() {
         return (
@@ -77,25 +51,7 @@ export default function Login() {
                         }}></input>
                     </div>
                     <button onClick={login}>Login</button>
-                    <a onClick={setPage}>Signup Instead</a>
-                </div>
-
-                <div id="signup-container">
-                    <h1>Signup</h1>
-                    <div className="username-input-container">
-                        <span>Username</span>
-                        <input className="username-input" onChange={(e) => {
-                            setUsernameReg(e.target.value);
-                        }}></input>
-                    </div>
-                    <div className="password-input-container">
-                        <span>Password</span>
-                        <input className="password-input" type="password" onChange={(e) => {
-                            setPasswordReg(e.target.value);
-                        }}></input>
-                    </div>
-                    <button onClick={signup}>Signup</button>
-                    <a onClick={setPage}>Login Instead</a>
+                    <a onClick={signUpRedirect}>Signup Instead</a>
                 </div>
             </div>
         )
