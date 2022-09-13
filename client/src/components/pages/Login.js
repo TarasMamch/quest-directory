@@ -1,32 +1,21 @@
 import React, { useEffect, useState } from "react"
 import Axios from "axios";
 
-export default function Login() {
+export default function Login({ loginStatus, changeLoginStatus, changeUserId }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const [loginStatus, setLoginStatus] = useState("");
-
-    const [userid, setUserId] = useState(0)
-
     Axios.defaults.withCredentials = true;
-
-    useEffect(() => {
-        Axios.get("http://localhost:5000/login").then((response) => {
-            if (response.data.loggedIn) {
-                setLoginStatus(response.data.user.username);
-            }
-        });
-    }, []);
 
     function login() {
         Axios.post("http://localhost:5000/api/users/login", {
             username: username,
             password: password,
         }).then((response) => {
-            console.log(response)
             if (response.data.username) {
-                setLoginStatus(response.data.username);
+                changeLoginStatus(response.data.username);
+                changeUserId(response.data.id);
+                // document.location.href = '/'
             }
         });
     }
@@ -59,7 +48,7 @@ export default function Login() {
 
     return (
         <div>
-            {loginStatus.length > 0 ? document.location.href = '/home' : LoginTemplete()}
+            {/* {loginStatus.length > 0 ? document.location.href = "/" : LoginTemplete()} */}
         </div>
     )
 }

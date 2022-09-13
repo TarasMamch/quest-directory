@@ -2,24 +2,24 @@ import React from 'react';
 import { Routes, Route, Link } from "react-router-dom";
 import Axios from "axios"
 
-function Navbar() {
+function Header() {
 
-    async function logOut() {
-        await Axios.get("http://localhost:5000/logout")
-        document.location.href = '/'
-    }
+    // async function logOut() {
+    //     await Axios.get("http://localhost:5000/logout")
+    //     document.location.href = '/login'
+    // }
 
     return (
         <div className='header'>
             <h1>Quest Directory</h1>
             <div id='header-links'>
                 <span>
-                    <Link to="/home">Home</Link>
+                    <Link to="/">Home</Link>
                 </span>
-                <span onClick={logOut}>Logout</span>
+                <a>Logout</a>
             </div>
         </div>
     )
 }
 
-export default Navbar;
+export default Header;

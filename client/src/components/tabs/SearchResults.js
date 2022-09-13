@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-export default function Results({ data, setData }) {
+export default function Results({ data, setData, currentPage }) {
 
     const getTime = (param) => {
         const time = new Date(param)
@@ -47,10 +47,10 @@ export default function Results({ data, setData }) {
         console.log(data)
     }
 
-    let test = 'flights'
+    useEffect(() => console.log(currentPage))
 
     const renderPage = () => {
-        if (test === 'flights') {
+        if (currentPage === 'Flights') {
             return (
                 <div>
                     <div className="results-container">
@@ -83,7 +83,7 @@ export default function Results({ data, setData }) {
                     </div>
                 </div>
             )
-        } if (test === 'hotels') {
+        } if (currentPage === 'Hotels') {
             return (
                 <div>
                     <div className="results-container">
@@ -103,7 +103,7 @@ export default function Results({ data, setData }) {
                     </div>
                 </div>
             )
-        } if (test === 'rental') {
+        } if (currentPage === 'Rental') {
             <div className="results-container">
                 <h1 className="rental-vndr">{rentalVndr}</h1>
                 <h3 className="car-name">{carName}</h3>
@@ -122,10 +122,12 @@ export default function Results({ data, setData }) {
         }
     }
 
-
     return (
         <div>
-            {renderPage}
+            {renderPage()}
+            {/* {useEffect(() => {
+                data.map((flight) => <li>{flight.deeplink}</li>)
+            })} */}
         </div>
     )
 }

@@ -14,7 +14,7 @@ export default function Signup() {
         })
     }
 
-    const loginRedirect = () => document.location.href = "/"
+    const loginRedirect = () => document.location.href = "/login"
 
     return (
         <div>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Results from "./SearchResults";
 
-export default function Flights() {
+export default function Flights({ currentPage }) {
     const [flights, setFlights] = useState([])
 
     async function searchResults() {
@@ -57,7 +57,7 @@ export default function Flights() {
             </div >
             <div className="search-results-display">
             </div>
-            <Results data={flights} setData={setFlights} />
+            <Results data={flights} setData={setFlights} currentPage={currentPage} />
         </div>
     )
 }
