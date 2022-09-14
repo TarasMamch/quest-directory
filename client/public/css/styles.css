@@ -90,6 +90,10 @@ a {
     border-radius: 15px 15px 0px 0px;
 }
 
+.nav-bar:hover {
+    cursor: pointer;
+}
+
 .search-form {
     display: flex;
     justify-content: center;

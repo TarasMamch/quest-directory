@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Results from "./SearchResults";
 
-export default function Hotels() {
+export default function Hotels({ currentPage }) {
     const [hotels, setHotels] = useState([])
 
     async function searchResults() {
@@ -22,13 +22,12 @@ export default function Hotels() {
 
         const idResponse = await fetch(`https://skyscanner44.p.rapidapi.com/autocomplete-hotel?query=${searchName}`, options)
         const idData = await idResponse.json()
-        console.log(idData)
         const cityId = idData[0].entity_id
 
         const response = await fetch(`https://skyscanner44.p.rapidapi.com/search-hotel?locationId=${cityId}&adults=${adultNumb}&rooms=1&checkin=${checkinDate}&checkout=${checkoutDate}&currency=USD`, options)
         const data = await response.json()
-        console.log(data)
-        setHotels(data)
+        setHotels(data.hotels)
+        console.log(hotels)
     }
 
     return (
@@ -56,7 +55,7 @@ export default function Hotels() {
             </div>
             <div className="search-results-display">
             </div>
-            <Results data={hotels} />
+            <Results hotels={hotels} currentPage={currentPage} />
         </div>
     )
 }

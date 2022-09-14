@@ -2,12 +2,13 @@ import React from 'react';
 import { Routes, Route, Link } from "react-router-dom";
 import Axios from "axios"
 
-function Header() {
+function Header({ setLoginStatus, setUserId }) {
 
-    // async function logOut() {
-    //     await Axios.get("http://localhost:5000/logout")
-    //     document.location.href = '/login'
-    // }
+    async function logOut() {
+        await Axios.get("http://localhost:5000/logout")
+        setLoginStatus("")
+        setUserId(0)
+    }
 
     return (
         <div className='header'>
@@ -16,7 +17,7 @@ function Header() {
                 <span>
                     <Link to="/">Home</Link>
                 </span>
-                <a>Logout</a>
+                <a onClick={logOut}>Logout</a>
             </div>
         </div>
     )

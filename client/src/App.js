@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Axios from "axios";
 import Home from "./components/Home"
 import Login from "./components/pages/Login"
@@ -15,23 +15,21 @@ function App() {
     useEffect(() => {
         Axios.get("http://localhost:5000/login").then((response) => {
             if (response.data.loggedIn) {
-                changeLoginStatus(response.data.user.username);
-                changeUserId(response.data.user.id);
+                console.log(response)
+                setLoginStatus(response.data.user.username);
+                setUserId(response.data.user.id);
             }
         });
     }, []);
 
-    const changeLoginStatus = (data) => setLoginStatus(data)
-    const changeUserId = (data) => setUserId(data)
-
     return (
         <div>
-            <Header />
+            <Header setLoginStatus={setLoginStatus} setUserId={setUserId} />
             <div className="main-body">
                 <Routes>
-                    <Route path="/" element={<Home loginStatus={loginStatus} userId={userId} changeLoginStatus={changeLoginStatus} changeUserId={changeUserId} />} />
-                    <Route path="/login" element={<Login loginStatus={loginStatus} changeLoginStatus={changeLoginStatus} changeUserId={changeUserId} />} />
-                    <Route path="/signup" element={<Signup />} />
+                    <Route exact path="/" element={loginStatus.length > 0 ? <Home userId={userId} /> : <Navigate replace to="/login" />} />
+                    <Route exact path="/login" element={<Login changeLoginStatus={setLoginStatus} changeUserId={setUserId} />} />
+                    <Route exact path="/signup" element={<Signup />} />
                 </Routes>
             </div>
             <Footer />

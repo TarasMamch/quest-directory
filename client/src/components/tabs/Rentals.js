@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Results from "./SearchResults";
 
-export default function Rentals() {
+export default function Rentals({ currentPage }) {
     const [rentals, setRentals] = useState([])
 
     async function searchResults() {
@@ -51,7 +51,7 @@ export default function Rentals() {
             </div>
             <div className="search-results-display">
             </div>
-            <Results data={rentals} />
+            <Results rentals={rentals} currentPage={currentPage} />
         </div>
 
     )

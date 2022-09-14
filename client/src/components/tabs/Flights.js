@@ -21,7 +21,6 @@ export default function Flights({ currentPage }) {
                 'X-RapidAPI-Host': 'skyscanner44.p.rapidapi.com'
             }
         }
-
         const response = await fetch(`https://skyscanner44.p.rapidapi.com/search-extended?origin=${departAirport}&destination=${arriveAirport}&departureDate=${departDate}&returnDate=${returnDate}&adults=${adultNum}&currency=USD`, options)
         const data = await response.json()
         console.log(data.itineraries.results)
@@ -57,7 +56,7 @@ export default function Flights({ currentPage }) {
             </div >
             <div className="search-results-display">
             </div>
-            <Results data={flights} setData={setFlights} currentPage={currentPage} />
+            <Results flights={flights} currentPage={currentPage} />
         </div>
     )
 }

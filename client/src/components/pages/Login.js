@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react"
 import Axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
 
-export default function Login({ loginStatus, changeLoginStatus, changeUserId }) {
+export default function Login({ changeLoginStatus, changeUserId }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    let navigate = useNavigate()
 
     Axios.defaults.withCredentials = true;
 
@@ -15,40 +17,30 @@ export default function Login({ loginStatus, changeLoginStatus, changeUserId }) 
             if (response.data.username) {
                 changeLoginStatus(response.data.username);
                 changeUserId(response.data.id);
-                // document.location.href = '/'
+                navigate("/")
             }
         });
     }
 
-    const signUpRedirect = () => document.location.href = "/signup"
-
-    function LoginTemplete() {
-        return (
-            <div>
-                <div id="login-container">
-                    <h1>Login</h1>
-                    <div className="username-input-container">
-                        <span>Username</span>
-                        <input className="username-input" onChange={(e) => {
-                            setUsername(e.target.value);
-                        }}></input>
-                    </div>
-                    <div className="password-input-container">
-                        <span>Password</span>
-                        <input className="password-input" type="password" onChange={(e) => {
-                            setPassword(e.target.value);
-                        }}></input>
-                    </div>
-                    <button onClick={login}>Login</button>
-                    <a onClick={signUpRedirect}>Signup Instead</a>
-                </div>
-            </div>
-        )
-    }
-
     return (
         <div>
-            {/* {loginStatus.length > 0 ? document.location.href = "/" : LoginTemplete()} */}
+            <div id="login-container">
+                <h1>Login</h1>
+                <div className="username-input-container">
+                    <span>Username</span>
+                    <input className="username-input" value={username} onChange={(e) => {
+                        setUsername(e.target.value);
+                    }}></input>
+                </div>
+                <div className="password-input-container">
+                    <span>Password</span>
+                    <input className="password-input" type="password" onChange={(e) => {
+                        setPassword(e.target.value);
+                    }}></input>
+                </div>
+                <button onClick={login}>Login</button>
+                <Link to="/signup">Signup Instead</Link>
+            </div>
         </div>
     )
 }

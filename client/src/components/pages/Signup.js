@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from "react"
 import Axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Signup() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    let navigate = useNavigate()
 
     function signup() {
         Axios.post("http://localhost:5000/api/users", {
             username: username,
             password: password
         }).then((response) => {
-            loginRedirect()
+            navigate("/login")
         })
     }
-
-    const loginRedirect = () => document.location.href = "/login"
 
     return (
         <div>
             <div id="signup-container">
-                <h1>Signup</h1>
+                <h1> Signup</h1>
                 <div className="username-input-container">
                     <span>Username</span>
                     <input className="username-input" onChange={(e) => {
@@ -33,7 +33,7 @@ export default function Signup() {
                     }}></input>
                 </div>
                 <button onClick={signup}>Signup</button>
-                <a onClick={loginRedirect}>Login Instead</a>
+                <Link to="/login">Login Instead</Link>
             </div >
         </div >
     )
