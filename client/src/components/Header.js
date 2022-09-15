@@ -17,7 +17,12 @@ function Header({ setLoginStatus, setUserId }) {
                 <span>
                     <Link to="/">Home</Link>
                 </span>
-                <a onClick={logOut}>Logout</a>
+                <span>
+                    <Link to="/saved-trips">Saved Trips</Link>
+                </span>
+                <span>
+                    <a onClick={logOut}>Logout</a>
+                </span>
             </div>
         </div>
     )

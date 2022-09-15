@@ -3,9 +3,11 @@ import Results from "./SearchResults";
 
 export default function Flights({ currentPage }) {
     const [flights, setFlights] = useState([])
+    const [loading, setLoading] = useState(false)
 
     async function searchResults() {
-        console.log('searching...')
+        if (loading) return
+        setLoading(true)
         const departAirport = document.querySelector('#departAirport').value
         const arriveAirport = document.querySelector('#arriveAirport').value
         const depart = new Date(document.querySelector('#departDate').value)
@@ -25,6 +27,7 @@ export default function Flights({ currentPage }) {
         const data = await response.json()
         console.log(data.itineraries.results)
         setFlights(data.itineraries.results)
+        setLoading(false)
     }
 
     return (
@@ -52,7 +55,7 @@ export default function Flights({ currentPage }) {
                         <input type={'number'} min='1' max='2' id="adultNum"></input>
                     </div>
                 </div>
-                <button onClick={searchResults}>SEARCH</button>
+                <button onClick={searchResults} disabled={loading}>{loading ? "loading..." : "SEARCH"}</button>
             </div >
             <div className="search-results-display">
             </div>

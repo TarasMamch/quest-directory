@@ -1,18 +1,19 @@
 import React from 'react';
 
-function NavTabs({ currentPage, handlePageChange }) {
+function NavTabs({ setCurrentPage, setPage }) {
+
     return (
         <div className='nav-bar search-container'>
             <a
-                onClick={() => handlePageChange('Flights')}>
+                onClick={() => setCurrentPage('Flights')}>
                 Flights
             </a>
             <a
-                onClick={() => handlePageChange('Hotels')}>
+                onClick={() => setCurrentPage('Hotels')}>
                 Hotels
             </a>
             <a
-                onClick={() => handlePageChange('Rentals')}>
+                onClick={() => setCurrentPage('Rentals')}>
                 Car Rentals
             </a>
         </div>

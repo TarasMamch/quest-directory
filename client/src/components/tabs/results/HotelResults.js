@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
 
-export default function HotelResults({ data, getTime }) {
+export default function HotelResults({ searchResults, savedTrips }) {
+    let page = null
+
+    function currentPage() {
+        if (document.location.href === "http://localhost:3000/") {
+            page = searchResults
+        } if (document.location.href === "http://localhost:3000/saved-trips") {
+            page = savedTrips
+        }
+    }
 
     function saveData(data) {
         const dataObj = {
@@ -11,11 +20,13 @@ export default function HotelResults({ data, getTime }) {
         console.log(dataObj)
     }
 
+    currentPage()
+
     return (
         <div>
-            {data.map((hotel) => {
+            {page.map((hotel, index) => {
                 return (
-                    <div className="results-container">
+                    <div className="results-container" key={index}>
                         <h3 className="hotel-name">{hotel.name}</h3>
                         <h3 className="hotel-stars">Stars : {hotel.stars}</h3>
                         <h3 className="hotel-price">{hotel.price}</h3>

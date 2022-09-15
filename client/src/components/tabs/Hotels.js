@@ -3,8 +3,11 @@ import Results from "./SearchResults";
 
 export default function Hotels({ currentPage }) {
     const [hotels, setHotels] = useState([])
+    const [loading, setLoading] = useState(false)
 
     async function searchResults() {
+        if (loading) return
+        setLoading(true)
         const searchName = document.querySelector('#hotel-city-name').value
         const adultNumb = document.querySelector('#hotel-adult-numb').value
         const checkin = new Date(document.querySelector('#hotel-checkin-date').value)
@@ -28,6 +31,7 @@ export default function Hotels({ currentPage }) {
         const data = await response.json()
         setHotels(data.hotels)
         console.log(hotels)
+        setLoading(false)
     }
 
     return (
@@ -51,7 +55,7 @@ export default function Hotels({ currentPage }) {
                         <input type={'date'} id='hotel-checkout-date'></input>
                     </div>
                 </div>
-                <button onClick={searchResults}>SEARCH</button>
+                <button onClick={searchResults} disabled={loading}>{loading ? "loading..." : "SEARCH"}</button>
             </div>
             <div className="search-results-display">
             </div>

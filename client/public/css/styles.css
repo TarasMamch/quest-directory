@@ -34,6 +34,10 @@ a {
     margin: 0px 30px;
 }
 
+#header-links a:hover {
+    cursor: pointer;
+}
+
 #login-container,
 #signup-container {
     display: flex;

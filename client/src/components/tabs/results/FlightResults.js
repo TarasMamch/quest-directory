@@ -1,6 +1,20 @@
 import React, { useEffect, useState } from "react";
 
-export default function FlightResults({ data, getTime }) {
+export default function FlightResults({ searchResults, savedTrips }) {
+    let page = null
+
+    const getTime = (param) => {
+        const time = new Date(param)
+        return `${time.getHours()} : ${time.getMinutes()}`
+    }
+
+    function currentPage() {
+        if (document.location.href === "http://localhost:3000/") {
+            page = searchResults
+        } if (document.location.href === "http://localhost:3000/saved-trips") {
+            page = savedTrips
+        }
+    }
 
     function saveData(data) {
         const dataObj = {
@@ -15,11 +29,13 @@ export default function FlightResults({ data, getTime }) {
         console.log(dataObj)
     }
 
+    currentPage()
+
     return (
         <div>
-            {data.map((flight) => {
+            {page.map((flight, index) => {
                 return (
-                    <div className="results-container">
+                    <div className="results-container" key={index}>
                         <h1>{flight.legs[0].carriers.marketing[0].name}</h1>
                         <div>
                             <h3>{getTime(flight.legs[0].departure)} - {getTime(flight.legs[0].arrival)}</h3>

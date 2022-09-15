@@ -4,10 +4,8 @@ import Flights from "./tabs/Flights"
 import Hotels from "./tabs/Hotels"
 import Rentals from "./tabs/Rentals"
 
-export default function Home({ userId }) {
-    const [currentPage, setCurrentPage] = useState('Flights');
-
-    const handlePageChange = (page) => setCurrentPage(page);
+export default function Home() {
+    const [currentPage, setCurrentPage] = useState("Flights")
 
     function changeTabs() {
         if (currentPage === 'Flights') {
@@ -25,7 +23,7 @@ export default function Home({ userId }) {
         <div className='main-body'>
             <div className='main-page-container'>
                 <div>
-                    <NavTabs currentPage={currentPage} handlePageChange={handlePageChange} />
+                    <NavTabs currentPage={currentPage} setCurrentPage={setCurrentPage} />
                     {changeTabs()}
                 </div>
             </div>

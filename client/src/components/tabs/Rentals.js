@@ -3,8 +3,11 @@ import Results from "./SearchResults";
 
 export default function Rentals({ currentPage }) {
     const [rentals, setRentals] = useState([])
+    const [loading, setLoading] = useState(false)
 
     async function searchResults() {
+        if (loading) return
+        setLoading(true)
         const searchCity = document.querySelector('#rental-city-search').value
         const pickUp = new Date(document.querySelector('#pick-up-date').value)
         const pickUpDate = `${pickUp.getFullYear()}-${("0" + (pickUp.getMonth() + 1)).slice(-2)}-${("0" + pickUp.getDate()).slice(-2)}`
@@ -28,6 +31,7 @@ export default function Rentals({ currentPage }) {
         const data = await response.json()
         console.log(data)
         setRentals(data.quotes)
+        setLoading(false)
     }
 
     return (
@@ -47,7 +51,7 @@ export default function Rentals({ currentPage }) {
                         <input type={'date'} id="drop-off-date"></input>
                     </div>
                 </div>
-                <button onClick={searchResults}>SEARCH</button>
+                <button onClick={searchResults} disabled={loading}>{loading ? "loading..." : "SEARCH"}</button>
             </div>
             <div className="search-results-display">
             </div>

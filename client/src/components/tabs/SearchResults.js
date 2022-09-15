@@ -5,23 +5,18 @@ import RentalResults from "./results/RentalResults";
 
 export default function Results({ flights, hotels, rentals, currentPage }) {
 
-    const getTime = (param) => {
-        const time = new Date(param)
-        return `${time.getHours()} : ${time.getMinutes()}`
-    }
-
     const renderPage = () => {
         if (currentPage === 'Flights') {
             return (
-                <FlightResults data={flights} getTime={getTime} />
+                <FlightResults searchResults={flights} />
             )
         } if (currentPage === 'Hotels') {
             return (
-                <HotelResults data={hotels} getTime={getTime} />
+                <HotelResults searchResults={hotels} />
             )
         } if (currentPage === 'Rentals') {
             return (
-                <RentalResults data={rentals} getTime={getTime} />
+                <RentalResults searchResults={rentals} />
             )
         }
     }
