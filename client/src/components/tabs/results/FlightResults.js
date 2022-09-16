@@ -7,6 +7,10 @@ export default function FlightResults({ searchResults, showSaveBtn }) {
         await axios.post("http://localhost:5000/api/flights", flight)
     }
 
+    async function deleteData(flight) {
+        await axios.delete(`http://localhost:5000/api/flights/${flight.id}`)
+    }
+
     return (
         <>
             {searchResults.map((flight, index) => {
@@ -28,7 +32,7 @@ export default function FlightResults({ searchResults, showSaveBtn }) {
                             {showSaveBtn ? <button onClick={() => {
                                 saveData(flight)
                             }}>Save</button> : <button onClick={() => {
-                                // saveData(flight)
+                                deleteData(flight)
                             }}>Delete</button>}
                         </div>
                     </div>

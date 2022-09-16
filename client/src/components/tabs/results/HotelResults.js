@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function HotelResults({ searchResults, savedTrips }) {
+export default function HotelResults({ searchResults, showSaveBtn }) {
 
-    async function saveData(flight) {
-        await axios.post("http://localhost:5000/api/hotels", flight)
+    async function saveData(hotel) {
+        await axios.post("http://localhost:5000/api/hotels", hotel)
+    }
+
+    async function deleteData(flight) {
+        console.log('test')
     }
 
     return (
@@ -16,9 +20,11 @@ export default function HotelResults({ searchResults, savedTrips }) {
                         <h3 className="hotel-stars">{hotel.stars}</h3>
                         <h3 className="hotel-price">{hotel.price}</h3>
                         <div className="button-container">
-                            <button onClick={(e) => {
+                            {showSaveBtn ? <button onClick={() => {
                                 saveData(hotel)
-                            }}>Save</button>
+                            }}>Save</button> : <button onClick={() => {
+                                deleteData(hotel)
+                            }}>Delete</button>}
                         </div>
                     </div>
                 )
