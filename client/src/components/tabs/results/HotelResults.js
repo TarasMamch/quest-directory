@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function HotelResults({ searchResults, showSaveBtn }) {
+export default function HotelResults({ searchResults, setSearchResults, showSaveBtn, saveData }) {
 
-    async function saveData(hotel) {
-        await axios.post("http://localhost:5000/api/hotels", hotel)
-    }
-
-    async function deleteData(flight) {
-        console.log('test')
+    async function deleteData(hotel) {
+        await axios.delete(`http://localhost:5000/api/hotels/${hotel.id}`)
+        setSearchResults(searchResults.filter(result => result !== hotel))
     }
 
     return (

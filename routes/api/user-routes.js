@@ -1,17 +1,30 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require("bcrypt");
-const { User } = require('../../models')
+const { User, Flight, Hotel, Rental } = require('../../models')
 
-router.get("/", (req, res) => {
-    User.findAll({
-    })
-        .then(data => {
-            res.json(data)
-        }).catch(err => {
-            res.status(500).json({ msg: "ERROR", err })
+router.get("/", async (req, res) => {
+    try {
+        const data = await User.findAll({
+            include: [Flight, Hotel, Rental]
         })
+        res.json(data)
+    } catch (err) {
+        res.status(500).json({ msg: "ERROR", err })
+    }
 })
+
+router.get("/:id", async (req, res) => {
+    try {
+        const data = await User.findByPk(req.params.id, {
+            include: [Flight, Hotel, Rental]
+        })
+        res.json(data)
+    } catch (err) {
+        res.status(500).json({ msg: "ERROR", err })
+    }
+})
+
 
 router.post("/", (req, res) => {
     User.create({

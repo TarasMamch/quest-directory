@@ -1,9 +1,9 @@
 import React from 'react';
 
-function NavTabs({ setCurrentPage, setPage }) {
+function NavTabs({ setCurrentPage }) {
 
     return (
-        <div className='nav-bar search-container'>
+        <div className='nav-bar'>
             <a
                 onClick={() => setCurrentPage('Flights')}>
                 Flights

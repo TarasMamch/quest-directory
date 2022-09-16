@@ -1,65 +1,69 @@
 import React, { useState } from "react";
 import Results from "./SearchResults";
 
-export default function Hotels({ currentPage }) {
+export default function Hotels({ currentPage, loading, setLoading, options, cityId, getDate }) {
     const [hotels, setHotels] = useState([])
-    const [loading, setLoading] = useState(false)
+
+    const [searchCity, setSearchCity] = useState("")
+    const [adultNumb, setAdultNumb] = useState("")
+    const [checkinDate, setCheckinDate] = useState("")
+    const [checkoutDate, setCheckoutDate] = useState("")
 
     async function searchResults() {
         if (loading) return
         setLoading(true)
-        const searchName = document.querySelector('#hotel-city-name').value
-        const adultNumb = document.querySelector('#hotel-adult-numb').value
-        const checkin = new Date(document.querySelector('#hotel-checkin-date').value)
-        const checkinDate = `${checkin.getFullYear()}-${("0" + (checkin.getMonth() + 1)).slice(-2)}-${("0" + checkin.getDate()).slice(-2)}`
-        const checkout = new Date(document.querySelector('#hotel-checkout-date').value)
-        const checkoutDate = `${checkout.getFullYear()}-${("0" + (checkout.getMonth() + 1)).slice(-2)}-${("0" + checkout.getDate()).slice(-2)}`
-
-        const options = {
-            method: 'GET',
-            headers: {
-                'X-RapidAPI-Key': 'e9542fa2d8msh67a0d44db6352b1p112cd6jsn3123864a8840',
-                'X-RapidAPI-Host': 'skyscanner44.p.rapidapi.com'
-            }
-        }
-
-        const idResponse = await fetch(`https://skyscanner44.p.rapidapi.com/autocomplete-hotel?query=${searchName}`, options)
-        const idData = await idResponse.json()
-        const cityId = idData[0].entity_id
-
-        const response = await fetch(`https://skyscanner44.p.rapidapi.com/search-hotel?locationId=${cityId}&adults=${adultNumb}&rooms=1&checkin=${checkinDate}&checkout=${checkoutDate}&currency=USD`, options)
+        const cityIdData = await cityId(searchCity)
+        const response = await fetch(`https://skyscanner44.p.rapidapi.com/search-hotel?locationId=${cityIdData}&adults=${adultNumb}&rooms=1&checkin=${getDate(checkinDate)}&checkout=${getDate(checkoutDate)}&currency=USD`, options)
         const data = await response.json()
-        setHotels(data.hotels)
-        console.log(hotels)
+        console.log(convertResponse(data.hotels))
+        setHotels(convertResponse(data.hotels))
         setLoading(false)
     }
 
+    function convertResponse(data) {
+        return data.map((hotel) => {
+            return {
+                name: hotel.name,
+                stars: `Stars: ${hotel.stars}`,
+                price: hotel.price
+            }
+        })
+    }
+
     return (
-        <div>
+        <>
             <div className="search-containers">
                 <div className="indented-search-container">
                     <div className="input-container">
                         <span>City</span>
-                        <input placeholder="City" id="hotel-city-name"></input>
+                        <input placeholder="City" onChange={(e) => {
+                            setSearchCity(e.target.value)
+                        }}></input>
                     </div>
                     <div className="input-container">
                         <span>Adults</span>
-                        <input type={'number'} min='1' max='5' id="hotel-adult-numb"></input>
+                        <input type={'number'} min='1' max='5' onChange={(e) => {
+                            setAdultNumb(e.target.value)
+                        }}></input>
                     </div>
                     <div className="input-container">
                         <span>Checkin Date</span>
-                        <input type={'date'} id='hotel-checkin-date'></input>
+                        <input type={'date'} onChange={(e) => {
+                            setCheckinDate(e.target.value)
+                        }}></input>
                     </div>
                     <div className="input-container">
                         <span>Checkout Date</span>
-                        <input type={'date'} id='hotel-checkout-date'></input>
+                        <input type={'date'} onChange={(e) => {
+                            setCheckoutDate(e.target.value)
+                        }}></input>
                     </div>
                 </div>
                 <button onClick={searchResults} disabled={loading}>{loading ? "loading..." : "SEARCH"}</button>
             </div>
             <div className="search-results-display">
             </div>
-            <Results hotels={hotels} currentPage={currentPage} />
-        </div>
+            <Results data={hotels} currentPage={currentPage} />
+        </>
     )
 }

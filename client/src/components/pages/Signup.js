@@ -17,24 +17,22 @@ export default function Signup() {
     }
 
     return (
-        <div>
-            <div id="signup-container">
-                <h1> Signup</h1>
-                <div className="username-input-container">
-                    <span>Username</span>
-                    <input className="username-input" onChange={(e) => {
-                        setUsername(e.target.value);
-                    }}></input>
-                </div>
-                <div className="password-input-container">
-                    <span>Password</span>
-                    <input className="password-input" type="password" onChange={(e) => {
-                        setPassword(e.target.value);
-                    }}></input>
-                </div>
-                <button onClick={signup}>Signup</button>
-                <Link to="/login">Login Instead</Link>
-            </div >
+        <div id="signup-container">
+            <h1> Signup</h1>
+            <div className="username-input-container">
+                <span>Username</span>
+                <input className="username-input" onChange={(e) => {
+                    setUsername(e.target.value);
+                }}></input>
+            </div>
+            <div className="password-input-container">
+                <span>Password</span>
+                <input className="password-input" type="password" onChange={(e) => {
+                    setPassword(e.target.value);
+                }}></input>
+            </div>
+            <button onClick={signup}>Signup</button>
+            <Link to="/login">Login Instead</Link>
         </div >
     )
 }

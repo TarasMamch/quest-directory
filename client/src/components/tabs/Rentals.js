@@ -1,62 +1,60 @@
 import React, { useState } from "react";
 import Results from "./SearchResults";
 
-export default function Rentals({ currentPage }) {
+export default function Rentals({ currentPage, loading, setLoading, options, cityId, getDate }) {
     const [rentals, setRentals] = useState([])
-    const [loading, setLoading] = useState(false)
+
+    const [searchCity, setSearchCity] = useState("")
+    const [pickUpDate, setPickUpDate] = useState("")
+    const [dropOffDate, setDropOffDate] = useState("")
 
     async function searchResults() {
         if (loading) return
         setLoading(true)
-        const searchCity = document.querySelector('#rental-city-search').value
-        const pickUp = new Date(document.querySelector('#pick-up-date').value)
-        const pickUpDate = `${pickUp.getFullYear()}-${("0" + (pickUp.getMonth() + 1)).slice(-2)}-${("0" + pickUp.getDate()).slice(-2)}`
-        const dropOff = new Date(document.querySelector('#drop-off-date').value)
-        const dropOffDate = `${dropOff.getFullYear()}-${("0" + (dropOff.getMonth() + 1)).slice(-2)}-${("0" + dropOff.getDate()).slice(-2)}`
-
-        const options = {
-            method: 'GET',
-            headers: {
-                'X-RapidAPI-Key': 'e9542fa2d8msh67a0d44db6352b1p112cd6jsn3123864a8840',
-                'X-RapidAPI-Host': 'skyscanner44.p.rapidapi.com'
-            }
-        }
-
-        const idResponse = await fetch(`https://skyscanner44.p.rapidapi.com/autocomplete-rentacar?query=${searchCity}`, options)
-        const idData = await idResponse.json()
-        console.log(idData)
-        const cityId = idData[0].entity_id
-
-        const response = await fetch(`https://skyscanner44.p.rapidapi.com/search-rentacar?pickupId=${cityId}&pickupDate=${pickUpDate}&pickupTime=10%3A00&returnDate=${dropOffDate}&returnTime=10%3A00&currency=USD`, options)
+        const cityIdData = await cityId(searchCity)
+        const response = await fetch(`https://skyscanner44.p.rapidapi.com/search-rentacar?pickupId=${cityIdData}&pickupDate=${getDate(pickUpDate)}&pickupTime=10%3A00&returnDate=${getDate(dropOffDate)}&returnTime=10%3A00&currency=USD`, options)
         const data = await response.json()
-        console.log(data)
-        setRentals(data.quotes)
+        console.log(convertResponse(data.quotes))
+        setRentals(convertResponse(data.quotes))
         setLoading(false)
     }
 
+    function convertResponse(data) {
+        return data.map((car) => {
+            return {
+                vender: car.vndr,
+                name: car.car_name,
+                price: `$${car.price}`
+            }
+        })
+    }
+
     return (
-        <div>
+        <>
             <div className="search-containers">
                 <div className="indented-search-container">
                     <div className="input-container">
                         <span>City</span>
-                        <input placeholder="City" id="rental-city-search"></input>
+                        <input placeholder="City" onChange={(e) => {
+                            setSearchCity(e.target.value)
+                        }}></input>
                     </div>
                     <div className="input-container">
                         <span>Pick-up Date</span>
-                        <input type={'date'} id="pick-up-date"></input>
+                        <input type={'date'} onChange={(e) => {
+                            setPickUpDate(e.target.value)
+                        }}></input>
                     </div>
                     <div className="input-container">
                         <span>Drop-off Date</span>
-                        <input type={'date'} id="drop-off-date"></input>
+                        <input type={'date'} onChange={(e) => {
+                            setDropOffDate(e.target.value)
+                        }}></input>
                     </div>
                 </div>
                 <button onClick={searchResults} disabled={loading}>{loading ? "loading..." : "SEARCH"}</button>
             </div>
-            <div className="search-results-display">
-            </div>
-            <Results rentals={rentals} currentPage={currentPage} />
-        </div>
-
+            <Results data={rentals} currentPage={currentPage} />
+        </>
     )
 }

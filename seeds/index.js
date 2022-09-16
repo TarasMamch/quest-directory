@@ -1,18 +1,29 @@
-const sequelize = require("../config/connection");
-
-const { User } = require("../models");
+const sequelize = require('../config/connection');
+const { User, Flight, Hotel, Rental } = require('../models')
 
 const users = [
     {
-        username: "ThisIsTest",
+        username: "Lorem",
         password: "password"
     }
 ]
 
-const seedMe = async () => {
-    await sequelize.sync({ force: true });
-    await User.bulkCreate(users, { individualHooks: true })
-    process.exit(0)
-}
+const flights = []
 
-seedMe()
+const hotels = []
+
+const rentals = []
+
+const seedAll = async () => {
+    await sequelize.sync({ force: true })
+    console.log('\n----- DATABASE SYNCED -----\n')
+    await User.bulkCreate(users, { individualHooks: true })
+    await Flight.bulkCreate(flights)
+    await Hotel.bulkCreate(hotels)
+    await Rental.bulkCreate(rentals)
+    console.log('\n----- ALL IS DONE, EXITING -----\n')
+
+    process.exit(0);
+};
+
+seedAll();

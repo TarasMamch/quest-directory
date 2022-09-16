@@ -86,12 +86,13 @@ a {
 .nav-bar {
     display: flex;
     justify-content: space-around;
-    width: 900px;
-    padding: 15px;
+    width: 80%;
+    padding: 15px 0px;
     font-size: 24px;
     margin-top: 100px;
     background-color: #1D3557;
     border-radius: 15px 15px 0px 0px;
+    max-width: 1000px;
 }
 
 .nav-bar:hover {
@@ -103,7 +104,7 @@ a {
     justify-content: center;
     align-items: center;
     justify-content: space-around;
-    width: 800px;
+    width: 900px;
 }
 
 .input-field {
@@ -116,8 +117,10 @@ a {
     align-items: center;
     background-color: #E63946;
     border-radius: 0px 0px 15px 15px;
-    padding: 50px 50px;
+    padding: 50px 0px;
     margin-bottom: 50px;
+    width: 80%;
+    max-width: 1000px;
 }
 
 .search-containers button {
@@ -174,6 +177,8 @@ a {
     margin: 25px 0px;
     border-radius: 15px;
     color: #F1FAEE;
+    width: 80%;
+    max-width: 1000px;
 }
 
 .results-container a,

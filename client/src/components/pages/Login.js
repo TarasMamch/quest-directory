@@ -23,24 +23,22 @@ export default function Login({ changeLoginStatus, changeUserId }) {
     }
 
     return (
-        <div>
-            <div id="login-container">
-                <h1>Login</h1>
-                <div className="username-input-container">
-                    <span>Username</span>
-                    <input className="username-input" value={username} onChange={(e) => {
-                        setUsername(e.target.value);
-                    }}></input>
-                </div>
-                <div className="password-input-container">
-                    <span>Password</span>
-                    <input className="password-input" type="password" onChange={(e) => {
-                        setPassword(e.target.value);
-                    }}></input>
-                </div>
-                <button onClick={login}>Login</button>
-                <Link to="/signup">Signup Instead</Link>
+        <div id="login-container">
+            <h1>Login</h1>
+            <div className="username-input-container">
+                <span>Username</span>
+                <input className="username-input" value={username} onChange={(e) => {
+                    setUsername(e.target.value);
+                }}></input>
             </div>
+            <div className="password-input-container">
+                <span>Password</span>
+                <input className="password-input" type="password" onChange={(e) => {
+                    setPassword(e.target.value);
+                }}></input>
+            </div>
+            <button onClick={login}>Login</button>
+            <Link to="/signup">Signup Instead</Link>
         </div>
     )
 }

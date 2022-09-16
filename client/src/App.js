@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import ReactDOM from "react-dom";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Axios from "axios";
+import axios from "axios";
 import Home from "./components/Home"
 import Login from "./components/pages/Login"
 import Signup from "./components/pages/Signup"
@@ -14,7 +13,7 @@ function App() {
     const [userId, setUserId] = useState(0)
 
     useEffect(() => {
-        Axios.get("http://localhost:5000/login", { withCredentials: true }).then((response) => {
+        axios.get("http://localhost:5000/login", { withCredentials: true }).then((response) => {
             if (response.data.loggedIn) {
                 setLoginStatus(response.data.user.username);
                 setUserId(response.data.user.id);
@@ -23,7 +22,7 @@ function App() {
     }, []);
 
     return (
-        <div>
+        <>
             <Header setLoginStatus={setLoginStatus} setUserId={setUserId} />
             <div className="main-body">
                 <Routes>
@@ -34,7 +33,7 @@ function App() {
                 </Routes>
             </div>
             <Footer />
-        </div>
+        </>
     )
 }
 

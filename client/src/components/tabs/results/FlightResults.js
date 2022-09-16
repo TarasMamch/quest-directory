@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function FlightResults({ searchResults, showSaveBtn }) {
-
-    async function saveData(flight) {
-        await axios.post("http://localhost:5000/api/flights", flight)
-    }
+export default function FlightResults({ searchResults, setSearchResults, showSaveBtn, saveData }) {
 
     async function deleteData(flight) {
         await axios.delete(`http://localhost:5000/api/flights/${flight.id}`)
+        setSearchResults(searchResults.filter(result => result !== flight))
     }
 
     return (
